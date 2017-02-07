@@ -102,29 +102,14 @@ func PrintImg(sourceImg, tagImg string, arr [][]float64, num int) {
 					// fmt.Println(sumA)
 				}
 			}
-
-			// for k := 0; k < ((2*num + 1) * (2*num + 1)); k++ {
-			// 	var sumR uint16 = 0
-			// 	newColor.R = uint16(sumR)
-
-			// }
 			newColor.R = sumR
 			newColor.G = sumG
 			newColor.B = sumB
 			newColor.A = sumA
 			jpg.SetRGBA64(i, j, newColor)
-			// thisR, thisG, thisB, thisA := img.At(i, j).RGBA()
-			// var newColor color.RGBA64
-			// newColor.R = uint16(thisR)
-			// newColor.G = uint16(thisG)
-			// newColor.B = uint16(thisB)
-			// newColor.A = uint16(thisA)
 
 		}
 	}
-	// r, g, b, a := img.At(0, 0).RGBA()
-	// fmt.Println(r, g, b, a)
-	// jpg := image.NewGray(img.Bounds())
 	draw.Draw(jpg, img.Bounds().Add(image.Pt(xWidth, yHeight)), img, img.Bounds().Min, draw.Src)
 	jpeg.Encode(file1, jpg, nil)
 }

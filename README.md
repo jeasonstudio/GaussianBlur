@@ -17,9 +17,7 @@ go get github.com/jeasonstudio/GaussianBlur
 
 ```go
 package main
-
 import "github.com/jeasonstudio/GaussianBlur"
-
 func main()  {
     GaussianBlur.GaussianBlur("source.jpg","tag.jpg",5,5.0)
 }

@@ -10,13 +10,13 @@ import (
 	"os"
 )
 
-// OMIGA Ω
-const OMIGA = 10
+// OMIGA Ω 的值，越大，模糊程度越高
+const OMIGA = 50
 
 func main() {
 	num := 10
 
-	PrintImg("ava.jpg", "cvc.jpg", GetAvgArr(num), num)
+	PrintImg("source.jpg", "o50n10.jpg", GetAvgArr(num), num)
 
 }
 

@@ -11,16 +11,12 @@ import (
 )
 
 // OMIGA Ω
-const OMIGA = 1.5
+const OMIGA = 10
 
 func main() {
-	num := 1
+	num := 10
 
-	// fmt.Println(GetAvgArr(1))
-
-	// fmt.Println(GaussFunc(0, 0, OMIGA))
-
-	PrintImg("ava.jpg", "bvb.jpg", GetAvgArr(num), num)
+	PrintImg("ava.jpg", "cvc.jpg", GetAvgArr(num), num)
 
 }
 
@@ -79,16 +75,51 @@ func PrintImg(sourceImg, tagImg string, arr [][]float64, num int) {
 
 	for i := 0; i < xWidth; i++ {
 		for j := 0; j < yHeight; j++ {
-			for k := 0; k < ((2*num + 1) * (2*num + 1)); k++ {
-			}
-			thisR, thisG, thisB, thisA := img.At(i, j).RGBA()
 			var newColor color.RGBA64
-			newColor.R = uint16(thisR)
-			newColor.G = uint16(thisG)
-			newColor.B = uint16(thisB)
-			newColor.A = uint16(thisA)
+			var sumR, sumG, sumB, sumA uint16
 
+			for p := ((-1) * num); p <= num; p++ {
+				for q := ((-1) * num); q <= num; q++ {
+					trueX := i + p
+					trueY := j + q
+
+					// 若超出边界则使用边界值
+					if trueX < 0 {
+						trueX = 0
+					} else if trueX > xWidth {
+						trueX = xWidth
+					}
+					if trueY < 0 {
+						trueY = 0
+					} else if trueY > yHeight {
+						trueY = yHeight
+					}
+					thisR, thisG, thisB, thisA := img.At(trueX, trueY).RGBA()
+					sumR += uint16(arr[p+num][q+num] * float64(thisR))
+					sumG += uint16(arr[p+num][q+num] * float64(thisG))
+					sumB += uint16(arr[p+num][q+num] * float64(thisB))
+					sumA += uint16(arr[p+num][q+num] * float64(thisA))
+					// fmt.Println(sumA)
+				}
+			}
+
+			// for k := 0; k < ((2*num + 1) * (2*num + 1)); k++ {
+			// 	var sumR uint16 = 0
+			// 	newColor.R = uint16(sumR)
+
+			// }
+			newColor.R = sumR
+			newColor.G = sumG
+			newColor.B = sumB
+			newColor.A = sumA
 			jpg.SetRGBA64(i, j, newColor)
+			// thisR, thisG, thisB, thisA := img.At(i, j).RGBA()
+			// var newColor color.RGBA64
+			// newColor.R = uint16(thisR)
+			// newColor.G = uint16(thisG)
+			// newColor.B = uint16(thisB)
+			// newColor.A = uint16(thisA)
+
 		}
 	}
 	// r, g, b, a := img.At(0, 0).RGBA()

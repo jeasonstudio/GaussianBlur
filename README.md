@@ -14,10 +14,8 @@ i-num => i+num
 j-num => j+num
 ```
 
-![](source.jpg)
-
-![](o5n5.jpg)
-
-![](o10n10.jpg)
-
-![](o50n10.jpg)
+info | source | show |
+---|---|---
+Ω = 5; n = 5 | ![](source.jpg) | ![](o5n5.jpg)
+Ω = 10; n = 10 | ![](source.jpg) | ![](o10n10.jpg)
+Ω = 50; n = 10 | ![](source.jpg) | ![](o50n10.jpg)

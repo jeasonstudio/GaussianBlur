@@ -1,4 +1,4 @@
-package main
+package GaussianBlur
 
 import (
 	"fmt"
@@ -10,13 +10,10 @@ import (
 	"os"
 )
 
-// OMIGA Ω 的值，越大，模糊程度越高
-const OMIGA = 50
+// GaussianBlur Package Main Func
+func GaussianBlur(sourceImg, tagImg string, num int, OMIGA float64) {
 
-func main() {
-	num := 10
-
-	PrintImg("source.jpg", "o50n10.jpg", GetAvgArr(num), num)
+	PrintImg(sourceImg, tagImg, GetAvgArr(num, OMIGA), num)
 
 }
 
@@ -26,7 +23,7 @@ func GaussFunc(x, y int, OmiGa float64) float64 {
 }
 
 // GetAvgArr 计算权重矩阵
-func GetAvgArr(len int) [][]float64 {
+func GetAvgArr(len int, OMIGA float64) [][]float64 {
 	sum := 0.0
 	arr := make([][]float64, (2*len + 1), (2*len + 1))
 	for i := 0; i < (2*len + 1); i++ {

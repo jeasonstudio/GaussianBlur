@@ -1,5 +1,12 @@
 package main
 
+import (
+	"fmt"
+)
+
+
+
 func main() {
-	GoImage.GaussianBlur("source.jpg", "tag.jpg", 5, 100.0)
+    fmt.Println("start GaussianBlur")
+	GaussianBlur.GBlurInit("source.jpg", "tag.jpg", 5, 100.0)
 }

@@ -1,4 +1,4 @@
-package GoImage
+package GaussianBlur
 
 import (
 	"fmt"
@@ -10,7 +10,7 @@ import (
 )
 
 // GaussianBlur Package Main Func
-func GaussianBlur(sourceImg, tagImg string, num int, OMIGA float64) {
+func GBlurInit(sourceImg, tagImg string, num int, OMIGA float64) {
 
 	PrintImg(sourceImg, tagImg, GetAvgArr(num, OMIGA), num)
 

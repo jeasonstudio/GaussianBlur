@@ -5,9 +5,9 @@ GaussianBlur for golang go 语言图像处理库——高斯模糊
 
 info | source | result |
 ---|---|---
-Ω = 5; n = 5 | ![](source.jpg) | ![](o5n5.jpg)
-Ω = 10; n = 10 | ![](source.jpg) | ![](o10n10.jpg)
-Ω = 50; n = 10 | ![](source.jpg) | ![](o50n10.jpg)
+Ω = 5; n = 5 | ![](./img/source.jpg) | ![](./img/o5n5.jpg)
+Ω = 10; n = 10 | ![](./img/source.jpg) | ![](./img/o10n10.jpg)
+Ω = 50; n = 10 | ![](./img/source.jpg) | ![](./img/o50n10.jpg)
 
 ### Usage
 
@@ -19,7 +19,7 @@ go get github.com/jeasonstudio/GaussianBlur
 package main
 import "github.com/jeasonstudio/GaussianBlur"
 func main()  {
-    GaussianBlur.GaussianBlur("source.jpg","tag.jpg",5,5.0)
+    GaussianBlur.GBlurInit("source.jpg","tag.jpg",5,5.0)
 }
 ```
 
@@ -41,4 +41,4 @@ func GaussianBlur(sourceImg, tagImg string, num int, OMIGA float64)
 
  - 算法时间、空间复杂度有很大优化空间。
  - 添加对 *.png 格式文件的支持。
- - 处理后图片边缘有很大失真，尤其右边和下边。
+ - ~~处理后图片边缘有很大失真，尤其右边和下边。~~

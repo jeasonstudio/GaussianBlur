@@ -1,10 +1,9 @@
-package GaussianBlur
+package GoImage
 
 import (
 	"fmt"
 	"image"
 	"image/color"
-	"image/draw"
 	"image/jpeg"
 	"math"
 	"os"
@@ -65,10 +64,11 @@ func PrintImg(sourceImg, tagImg string, arr [][]float64, num int) {
 
 	img, _ := jpeg.Decode(file)
 
-	jpg := image.NewRGBA64(img.Bounds())
-
 	xWidth := img.Bounds().Dx()
 	yHeight := img.Bounds().Dy()
+
+	// 这里是为了去除边缘绿边
+	jpg := image.NewRGBA64(image.Rect(0, 0, xWidth-num, yHeight-num))
 
 	for i := 0; i < xWidth; i++ {
 		for j := 0; j < yHeight; j++ {
@@ -83,13 +83,13 @@ func PrintImg(sourceImg, tagImg string, arr [][]float64, num int) {
 					// 若超出边界则使用边界值
 					if trueX < 0 {
 						trueX = 0
-					} else if trueX > xWidth {
-						trueX = xWidth
+					} else if trueX > xWidth+num {
+						trueX = xWidth - 1
 					}
 					if trueY < 0 {
 						trueY = 0
-					} else if trueY > yHeight {
-						trueY = yHeight
+					} else if trueY > yHeight+num {
+						trueY = yHeight - 1
 					}
 					thisR, thisG, thisB, thisA := img.At(trueX, trueY).RGBA()
 					sumR += uint16(arr[p+num][q+num] * float64(thisR))
@@ -107,6 +107,7 @@ func PrintImg(sourceImg, tagImg string, arr [][]float64, num int) {
 
 		}
 	}
-	draw.Draw(jpg, img.Bounds().Add(image.Pt(xWidth, yHeight)), img, img.Bounds().Min, draw.Src)
+	// 画图
 	jpeg.Encode(file1, jpg, nil)
+	// png.Encode(file1, jpg)
 }

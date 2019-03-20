@@ -18,30 +18,41 @@ func GBlurInit(sourceImg, tagImg string, num int, OMIGA float64) {
 
 // GaussFunc 二维高斯函数
 func GaussFunc(x, y int, OmiGa float64) float64 {
-	return (1.0 / (2.0 * math.Pi * OmiGa * OmiGa)) * math.Pow(math.E, ((-1.0)*(float64(x*x+y*y)/(2.0*OmiGa*OmiGa))))
+	return 1.0 / math.Sqrt(2.0*math.Pi*OmiGa*OmiGa) * math.Exp(-float64(x*x + y*y)/(2*OmiGa*OmiGa))
 }
 
 // GetAvgArr 计算权重矩阵
 func GetAvgArr(len int, OMIGA float64) [][]float64 {
 	sum := 0.0
-	arr := make([][]float64, (2*len + 1), (2*len + 1))
-	for i := 0; i < (2*len + 1); i++ {
-		arr2 := make([]float64, (2*len + 1), (2*len + 1))
-		for j := 0; j < (2*len + 1); j++ {
+	arr := make([][]float64, 2*len+1, 2*len+1)
+	for i := 0; i < 2*len+1; i++ {
+		arr[i] = make([]float64, 2*len+1, 2*len+1)
+	}
+	for i := 0; i < len; i++ {
+		weight := GaussFunc(i-len, 0, OMIGA)
+		arr[i][len] = weight
+		sum += 4 * weight
+		for j := 0; j < len; j++ {
 			thisGaussResult := GaussFunc(i-len, j-len, OMIGA)
-			arr2[j] = thisGaussResult
-			sum += thisGaussResult
+			arr[i][j] = thisGaussResult
+			sum += 4 * thisGaussResult
 		}
-		arr[i] = arr2
 	}
+	weight := GaussFunc(0, 0, OMIGA)
+	arr[len][len] = weight
+	sum += weight
 
-	for i := 0; i < (2*len + 1); i++ {
-		thisArr := arr[i]
-		for j := 0; j < (2*len + 1); j++ {
-			thisArr[j] = thisArr[j] / sum
+	for i := 0; i < len; i++ {
+		arr[i][len] /= sum
+		arr[2*len-i][len], arr[len][i], arr[len][2*len-i] = arr[i][len], arr[i][len], arr[i][len]
+
+		for j := 0; j < len; j++ {
+			arr[i][j] /= sum
+			arr[i][2*len-j], arr[2*len-i][j], arr[2*len-i][2*len-j] = arr[i][j], arr[i][j], arr[i][j]
+
 		}
-		arr[i] = thisArr
 	}
+	arr[len][len] /= sum
 
 	return arr
 }
